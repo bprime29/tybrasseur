@@ -1,0 +1,165 @@
+{% extends 'blog/base.html' %}
+{% block titre %}Recette -{{ recette.titre }} {% endblock %}
+{% block contenu %}
+
+<link href="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/css/lightgallery.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+<script src="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/js/lightgallery.js"></script>
+<script src="https://cdn.rawgit.com/sachinchoolur/lg-pager.js/master/dist/lg-pager.js"></script>
+<script src="https://cdn.rawgit.com/sachinchoolur/lg-autoplay.js/master/dist/lg-autoplay.js"></script>
+<script src="https://cdn.rawgit.com/sachinchoolur/lg-fullscreen.js/master/dist/lg-fullscreen.js"></script>
+<script src="https://cdn.rawgit.com/sachinchoolur/lg-zoom.js/master/dist/lg-zoom.js"></script>
+<script src="https://cdn.rawgit.com/sachinchoolur/lg-hash.js/master/dist/lg-hash.js"></script>
+<script src="https://cdn.rawgit.com/sachinchoolur/lg-share.js/master/dist/lg-share.js"></script>
+
+<div class="container font_white">
+
+    <div class="starter-template">
+        <h1> {{ recette.titre }} </h1>
+        <p class="lead"> {{ recette.description }} </p>
+    </div>
+
+    <section class="row">
+        <style type="text/css">
+            [class*="col-"] { margin-bottom: 20px; }
+            img { width: 100%; }
+        </style>
+        <div class="col-lg-10 col-lg-offset-1">
+            <div id="aniimated-thumbnials" class="zoom">
+                {% for photo in photos %}
+                    <a class="col-xs-4 col-sm-3 col-md-2 image" href="{{ photo.image.url }}">
+                        <img class="img-responsive" src="{{ photo.thumbnail.url }}">
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <script type="text/javascript">
+        lightGallery(document.getElementById('aniimated-thumbnials'), {
+            thumbnail:true
+        });
+    </script>
+
+    <div class="card-box">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-xs-4 text-center">
+                        toto
+                    </div>
+                    <div class="col-xs-8 col-xs-divider-left">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                densité initial
+                            </div>
+                            <div class="col-xs-2 text-success">
+                                toto
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                densité initial
+                            </div>
+                            <div class="col-xs-2 text-success">
+                                toto
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                densité initial
+                            </div>
+                            <div class="col-xs-2 text-success">
+                                toto
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                densité initial
+                            </div>
+                            <div class="col-xs-2 text-success">
+                                toto
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-10 col-lg-offset-1">
+        <table class="table table-borderless table-condensed table-hover">
+            <caption>
+                <h4>Information</h4>
+            </caption>
+            <tbody>
+            <tr>
+                <td>Type: {{ recette.type }}</td>
+                <td>Date: {{ recette.real_date }}</td>
+            </tr>
+            <tr>
+                <td>Volume : {{ recette.volume }} L</td>
+                <td>Brasseur: {{ recette.user }}</td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-10 col-lg-offset-1">
+        <table class="table table-hover table-striped table-condensed">
+            <caption>
+                <h4>Ingrédients</h4>
+            </caption>
+            <thead>
+            <tr>
+                <th>Quantité</th>
+                <th>item</th>
+                <th>Type</th>
+                <th>% / IBU</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for ingredient in ingredients %}
+                <tr>
+                    <td>{{ ingredient.quantite }}</td>
+                    <td>{{ ingredient.nom }}</td>
+                    <td>{{ ingredient.typ }}</td>
+                    <td>{{ ingredient.caracteristique }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-10 col-lg-offset-1">
+        <h3> Commentaires :</h3>
+        <div class="commentaire">
+            <ul>
+                {% for com in commentaires %}
+                    <li>
+                        <span>{{ com.user }} le {{ com.created_at }}</span>
+                        <div>{{ com.message }}</div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% if user.is_authenticated %}
+            {% if form_com %}
+                <h4>Ajouter un commentaire</h4>
+                <form action="{% url 'blog:recette' recette.id %}" method="post">
+                {{ form_com }}
+                {% csrf_token %}
+                 <input type="submit" class="btn btn-primary" value="Commenter">
+                </form>
+            {% else %}
+                Vous avez déjà voté !
+            {% endif %}
+        {% else %}
+            <a href="{% url 'login' %}">Connectez-vous pour laisser un commentaire à cette recette de malade !</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

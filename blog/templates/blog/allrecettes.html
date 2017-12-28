@@ -1,0 +1,55 @@
+{% extends 'blog/base.html' %}
+{% block titre %}Liste des sondages{% endblock %}
+{% block contenu %}
+    {% if typeObjet %}
+        <h1>{{ typeObjet.label }}</h1>
+        <div>{{ typeObjet.detail }}</div>
+    {% else %}
+        <h1>Voici toutes nos recettes !</h1>
+    {% endif %}
+    {% if recettes %}
+        <table class="table table-hover search-result">
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Titre</th>
+                    <th>Difficulté</th>
+                    <th>Note moyenne</th>
+                    <th>Temps de préparation</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for result in recettes %}
+                <tr>
+                    <td>
+                        <a href="{% url 'blog:recette' result.id %}">
+                            <img src="{% if result.photo_set.all %}{% for photo in result.photo_set.all %}{% if forloop.counter == 1%}{{ photo.image.url }}{% endif %}{% endfor %}{% else %}{{ STATIC_URL }}images/no-image.png{% endif %}" alt="" />
+                        </a>
+                    </td>
+                    <td><a href="{% url 'blog:recette' result.id %}">{{ result.titre }}</a></td>
+                    <td>{{ result.difficulte }}</td>
+                    <td>{% if result.moyenne_note.note__avg %}{{ result.moyenne_note.note__avg|floatformat:"2" }}{% else %}Pas de notes{% endif %}</td>
+                    <td>{{ result.temps_preparation }} minutes</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagination">
+            <span class="step-links">
+                {% if recettes.has_previous %}
+                    <a href="?type={{ typeObjet.id }}&page={{ recettes.previous_page_number }}">Résultats précédent</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ recettes.number }} de {{ recettes.paginator.num_pages }}
+                </span>
+
+                {% if recettes.has_next %}
+                    <a href="?type={{ typeObjet.id }}&page={{ recettes.next_page_number }}">Résultats suivant</a>
+                {% endif %}
+            </span>
+        </div>
+    {% else %}
+        <h2>Aucune recette</h2>
+    {% endif %}
+{% endblock %}

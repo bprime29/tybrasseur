@@ -1,0 +1,28 @@
+body {
+    background-color: black;
+    padding-top: 50px;
+    /*
+    background-image: url("../images/page_background.jpg");
+    background-attachment:fixed;
+     */
+}
+
+.starter-template {
+    padding: 40px 15px;
+    text-align: center;
+}
+
+h1 a {
+    color: #FCA205;
+}
+
+.card-box {
+    padding: 20px;
+    border: 1px solid rgba(54, 64, 74, 0.08);
+    border-radius: 5px;
+    background-clip: padding-box;
+    margin-bottom: 20px;
+    background-color: #fff;
+}
+
+
