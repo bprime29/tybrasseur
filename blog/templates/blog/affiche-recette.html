@@ -20,19 +20,25 @@
     </div>
 
     <section class="row">
-        <style type="text/css">
-            [class*="col-"] { margin-bottom: 20px; }
-            img { width: 100%; }
-        </style>
-        <div class="col-lg-10 col-lg-offset-1">
-            <div id="aniimated-thumbnials" class="zoom">
-                {% for photo in photos %}
-                    <a class="col-xs-4 col-sm-3 col-md-2 image" href="{{ photo.image.url }}">
-                        <img class="img-responsive" src="{{ photo.thumbnail.url }}">
-                    </a>
-                {% endfor %}
+       <div class="col-lg-10 col-lg-offset-1">
+            <div class="col-sm-5">
+                <div class="card-bax">
+                    <h4>Information</h4>
+                    <p>Type: {{ recette.type }}</p>
+                    <p>Date: {{ recette.real_date }}</p>
+                </div>
+
             </div>
-        </div>
+            <div class="col-sm-5">
+                <div id="aniimated-thumbnials" class="zoom">
+                    {% for photo in photos %}
+                        <a class="col-xs-4 col-sm-3 col-md-4 image" href="{{ photo.image.url }}">
+                            <img class="img-responsive" src="{{ photo.thumbnail.url }}">
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+       </div>
     </section>
 
     <script type="text/javascript">
@@ -40,53 +46,29 @@
             thumbnail:true
         });
     </script>
-
+<div class="col-lg-10 col-lg-offset-1">
     <div class="card-box">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-10">
                 <div class="row">
-                    <div class="col-xs-4 text-center">
+                    <div class="col-xs-5 text-center">
                         toto
                     </div>
-                    <div class="col-xs-8 col-xs-divider-left">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                densité initial
-                            </div>
-                            <div class="col-xs-2 text-success">
-                                toto
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-4">
-                                densité initial
-                            </div>
-                            <div class="col-xs-2 text-success">
-                                toto
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-4">
-                                densité initial
-                            </div>
-                            <div class="col-xs-2 text-success">
-                                toto
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-4">
-                                densité initial
-                            </div>
-                            <div class="col-xs-2 text-success">
-                                toto
-                            </div>
-                        </div>
+                    <div class="col-xs-5 col-xs-divider-left">
+                        <div id="aniimated-thumbnials" class="zoom">
+                    {% for photo in photos %}
+                        <a class="col-xs-4 col-sm-3 col-md-4 image" href="{{ photo.image.url }}">
+                            <img class="img-responsive" src="{{ photo.thumbnail.url }}">
+                        </a>
+                    {% endfor %}
+                </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+</div>
 
     <div class="col-lg-10 col-lg-offset-1">
         <table class="table table-borderless table-condensed table-hover">
@@ -133,6 +115,28 @@
             </tbody>
         </table>
     </div>
+
+    <div class="col-lg-10 col-lg-offset-1">
+        <ul class="nav nav-tabs tabs tabs-top" style="width: 100%">
+            <li class="tab active">
+                <a href="#mashing" data-toggle="tab" target="_blank">
+                    Empâtage
+                </a>
+            </li>
+            <li class="tab">
+                <a href="#boil" data-toggle="tab" target="_blank">
+                    Ebullition
+                </a>
+            </li>
+            <li class="tab">
+                <a href="#ferment" data-toggle="tab" target="_blank">
+                    Fermentation
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
 
     <div class="col-lg-10 col-lg-offset-1">
         <h3> Commentaires :</h3>
