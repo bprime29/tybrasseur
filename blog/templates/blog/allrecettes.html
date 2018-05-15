@@ -1,21 +1,19 @@
 {% extends 'blog/base.html' %}
-{% block titre %}Liste des sondages{% endblock %}
+{% block titre %}Liste des recettes{% endblock %}
 {% block contenu %}
-    {% if typeObjet %}
-        <h1>{{ typeObjet.label }}</h1>
-        <div>{{ typeObjet.detail }}</div>
-    {% else %}
-        <h1>Voici toutes nos recettes !</h1>
-    {% endif %}
+<div class="container font_white">
+
+    <div class="starter-template">
+        <h1> Voici mes recettes </h1>
+    </div>
     {% if recettes %}
         <table class="table table-hover search-result">
             <thead>
                 <tr>
                     <th>Photo</th>
                     <th>Titre</th>
-                    <th>Difficulté</th>
-                    <th>Note moyenne</th>
-                    <th>Temps de préparation</th>
+                    <th>Méthode</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,9 +25,8 @@
                         </a>
                     </td>
                     <td><a href="{% url 'blog:recette' result.id %}">{{ result.titre }}</a></td>
-                    <td>{{ result.difficulte }}</td>
-                    <td>{% if result.moyenne_note.note__avg %}{{ result.moyenne_note.note__avg|floatformat:"2" }}{% else %}Pas de notes{% endif %}</td>
-                    <td>{{ result.temps_preparation }} minutes</td>
+                    <td>{{ result.type }}</td>
+                    <td>{{ result.real_date }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -53,3 +50,4 @@
         <h2>Aucune recette</h2>
     {% endif %}
 {% endblock %}
+</div>

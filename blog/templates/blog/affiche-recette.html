@@ -136,7 +136,65 @@
         </ul>
     </div>
 
-
+    <div class="tab-content">
+        <div class="tab-pane active" id="mashing">
+            <div class="col-lg-10 col-lg-offset-1">
+                <ul class="timeline">
+                    {% for etape in etapes_empatage %}
+                    <li>
+                        {% if etape.emp_tag|striptags == 'concassage' %}
+                        <div class="timeline-badge primary"><i class="fa fa-gavel"> </i></div>
+                        {% elif etape.emp_tag|striptags == 'Chauffer' %}
+                        <div class="timeline-badge danger"><i class="fa fa-fire"> </i></div>
+                        {% elif etape.emp_tag|striptags == 'Palier' %}
+                        <div class="timeline-badge success"><i class="fa fa-spoon"> </i></div>
+                        {% elif etape.emp_tag|striptags == 'Filtrer' %}
+                        <div class="timeline-badge info"><i class="fa fa-tint"> </i></div>
+                        {% endif %}
+                        <div class="timeline-panel">
+                            <div class="timeline-body">{{ etape.emp_detail }}</div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="tab-pane" id="boil">
+            <div class="col-lg-10 col-lg-offset-1">
+                <ul class="timeline">
+                    {% for etape in etapes_ebullition %}
+                    <li>
+                        {% if etape.ebu_tag|striptags == 'ajouter' %}
+                        <div class="timeline-badge success"><i class="fa fa-plus"> </i></div>
+                        {% elif etape.ebu_tag|striptags == 'chauffer' %}
+                        <div class="timeline-badge danger"><i class="fa fa-fire"> </i></div>
+                        {% elif etape.ebu_tag|striptags == 'refroidir' %}
+                        <div class="timeline-badge danger"><i class="fa fa-fire-extinguisher"> </i></div>
+                        {% elif etape.ebu_tag|striptags == 'wait' %}
+                        <div class="timeline-badge info"><i class="fa fa-hourglass-start"> </i></div>
+                        {% elif etape.ebu_tag|striptags == 'remove' %}
+                        <div class="timeline-badge success"><i class="fa fa-remove"> </i></div>
+                        {% endif %}
+                        <div class="timeline-panel">
+                            <div class="timeline-body">{{ etape.ebu_detail }}</div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="tab-pane" id="ferment">
+            <div class="col-lg-10 col-lg-offset-1">
+                <table class="table table-borderless table-condensed table-hover">
+                    {% for etape in etapes_fermentation %}
+                    <tr>
+                        <td colspan="2"><em><strong>{{ etape.ferm_tag }} :</strong></em> {{ etape.ferm_detail }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
 
     <div class="col-lg-10 col-lg-offset-1">
         <h3> Commentaires :</h3>

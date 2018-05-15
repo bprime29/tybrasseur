@@ -1,12 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils import timezone
-from datetime import datetime
+
 
 # Create your models here.
 
+
 class Recette(models.Model):
-    user = models.ForeignKey(User,default=1,editable=False)
+    user = models.ForeignKey(User, default=1, editable=False)
     type = models.ForeignKey('Methode', null=True)
     titre = models.CharField(max_length=100)
     description = models.TextField()
@@ -21,8 +21,9 @@ class Recette(models.Model):
     def __str__(self):
         return self.titre
 
+
 class Photo(models.Model):
-    recette = models.ForeignKey('Recette',null=True,editable=False)
+    recette = models.ForeignKey('Recette', null=True, editable=False)
     image = models.ImageField(
         upload_to="photos_brassins",
         max_length=100
@@ -102,6 +103,49 @@ class Ingredient(models.Model):
 class Etape(models.Model):
     recette = models.ForeignKey('Recette', null=True, editable=False)
     detail = models.CharField(max_length=150)
+
+
+class Empatage(models.Model):
+    recette = models.ForeignKey('Recette', null=True, editable=False)
+    emp_tag = models.ForeignKey('Etape_empatage', null=True)
+    emp_detail = models.CharField(max_length=150)
+
+
+class Etape_empatage(models.Model):
+    title_empatage = models.CharField(max_length=256)
+    label_empatage = models.CharField(max_length=100,default='Label')
+    detail_empatage = models.TextField()
+
+    def __str__(self):
+        return self.title_empatage
+
+class Ebullition(models.Model):
+    recette = models.ForeignKey('Recette', null=True, editable=False)
+    ebu_tag = models.ForeignKey('Etape_ebullition', null=True)
+    ebu_detail = models.CharField(max_length=150)
+
+
+class Etape_ebullition(models.Model):
+    title_ebullition = models.CharField(max_length=256)
+    label_ebullition = models.CharField(max_length=100,default='Label')
+    detail_ebullition = models.TextField()
+
+    def __str__(self):
+        return self.title_ebullition
+
+class Fermentation(models.Model):
+    recette = models.ForeignKey('Recette', null=True, editable=False)
+    ferm_tag = models.ForeignKey('Etape_fermentation', null=True)
+    ferm_detail = models.CharField(max_length=150)
+
+
+class Etape_fermentation(models.Model):
+    title_fermentation = models.CharField(max_length=256)
+    label_fermentation = models.CharField(max_length=100,default='Label')
+    detail_fermentation = models.TextField()
+
+    def __str__(self):
+        return self.title_fermentation
 
 class Methode(models.Model):
     title = models.CharField(max_length=256)

@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Recette, Methode, Ingredient, Etape, Photo, Commentaire
+from .models import Recette, Methode, Ingredient, Etape, Empatage, Ebullition, Fermentation, Photo, Commentaire
 from .forms import RecetteForm, EtapeFormset, IngredientFormset, ImageFormset, CommentaireForm
 
 
@@ -50,6 +50,9 @@ def recette(request, id):
     recette = Recette.objects.get(id=id)
     etapes = Etape.objects.filter(recette=id)
     ingredients = Ingredient.objects.filter(recette=id)
+    etapes_empatage = Empatage.objects.filter(recette=id)
+    etapes_ebullition = Ebullition.objects.filter(recette=id)
+    etapes_fermentation = Fermentation.objects.filter(recette=id)
     photos = Photo.objects.filter(recette=id)
     commentaires = Commentaire.objects.filter(recette=id)
     form_com = CommentaireForm();
@@ -57,11 +60,15 @@ def recette(request, id):
         'recette'    : recette,
         'etapes'     : etapes,
         'ingredients': ingredients,
+        'etapes_empatage': etapes_empatage,
+        'etapes_ebullition': etapes_ebullition,
+        'etapes_fermentation': etapes_fermentation,
         'photos'     : photos,
         'commentaires': commentaires,
         'form_com': form_com,
     }
     return render(request, 'blog/affiche-recette.html', contexte)
+
 
 def search(request):
 
@@ -96,6 +103,7 @@ def search(request):
         'results' : results
     }
     return render(request, 'search/search_result.html', contexte)
+
 
 def nouvelleRecette(request):
 
@@ -133,3 +141,11 @@ def nouvelleRecette(request):
         'EtapeForm': EtapeForm,
         'ImageForm':ImageForm,
     })
+
+
+def calc_with_refracto(request):
+    return render(request, 'blog/calc_with_refracto.html')
+
+
+def calc_with_densimetre(request):
+    return render(request, 'blog/calc_with_densimetre.html')
